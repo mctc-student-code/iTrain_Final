@@ -1,54 +1,128 @@
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-{{#if username}}
-    <h2>Welcome to {{username}}'s profile</h2>
-{{/if}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<p>Member since {{formatDate signUpDate}}.</p>
+<link rel='stylesheet' href='/stylesheets/style.css' />
 
-<div class="data">
-<p>Height:
-    {{#if profileInfo.height}}
-        {{profileInfo.height}} inches
-    {{else}}
-        No height entered.
-    {{/if}}
-</p>
+<div class="container-fluid">
+    <div class="jumbotron text-center">
+        {{#if username}}
+            <h2>Welcome to {{username}}'s profile</h2>
+        {{/if}}
 
-<p>Last weigh in:
-    {{#if profileInfo.weight}}
-        {{profileInfo.weight}} lbs on {{formatDate profileInfo.date}}
-    {{else}}
-        No weight entered.
-    {{/if}}
-</p>
-
-<p>Current estimated BMI: %
-    {{#if profileInfo.BMI}}
-        {{profileInfo.BMI}}
-    {{else}}
-        No BMI data.
-    {{/if}}
-</p>
-
-</div>
-
-<div class="profileList">
-
-    {{#if profileInfo}}
-        <p>{{@index}}You weighed {{this.weight}} and had a BMI % of{{this.BMI}} On {{formatDate this.date}}</p><br>
-    {{else}}
-        <p>No data entered yet</p>
-    {{/if}}
+        <p>Member since {{formatDate signUpDate}}.</p>
+    </div>
 </div>
 
 
-<form action="/saveInfo" method="POST">
-    Date: <input type="date" name="date"><br>
-    Height (inches): <input type="number" name="height"><br>
-    Current Weight (lbs): <input type="number" name="weight"> <br>
-    <input type="submit" name="updateInfo" value="Submit">
-</form>
+<!-- Inline navigation menu -->
+<div class="container-fluid text-center">
+    <ul class="list-inline">
+        <li><a href="/profile">Home</a></li>
+        <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+    <h2>Quick Tips for a Healthy Lifestyle!</h2>
+    <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <h4>Switch to low-salt foods, and use salt sparingly<br><span style="font-style:normal;"></span></h4>
+            </div>
+            <div class="item">
+                <h4>A good balance between exercise and food intake is important. At least 30 minutes of moderate intensity physical activity, such as walking, is recommended every day.<br><span style="font-style:normal;"></span></h4>
+            </div>
+            <div class="item">
+                <h4>Adults who eat a healthy breakfast are more likely be a healthy weight and more productive at work.<br><span style="font-style:normal;"></span></h4>
+            </div>
+            <div class="item">
+                <h4>Drink alcohol in moderation.<br><span style="font-style:normal;"></span></h4>
+            </div>
+        </div>
+
+        <!-- Left and right controls for carousel-->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+</div>
 
 
-<a href="/logout">Log out</a>
+<div class="container-fluid text-center">
+
+    <p>Height:
+        {{#if profileInfo.height}}
+            {{profileInfo.height}} inches
+        {{else}}
+            No height entered.
+        {{/if}}
+    </p>
+
+    <p>Last weigh in:
+        {{#if profileInfo.weight}}
+            {{profileInfo.weight}} lbs on {{formatDate profileInfo.date}}
+        {{else}}
+            No weight entered.
+        {{/if}}
+    </p>
+
+    <p>Current estimated BMI: %
+        {{#if profileInfo.BMI}}
+            {{profileInfo.BMI}}
+        {{else}}
+            No BMI data.
+        {{/if}}
+    </p>
+
+    <form action="/saveInfo" method="POST">
+        Date: <input type="date" name="date"><br>
+        Height (inches): <input type="number" name="height"><br>
+        Current Weight (lbs): <input type="number" name="weight"> <br>
+        <input type="submit" class="btn btn-success" name="updateInfo" value="Submit">
+    </form>
+
+
+    <a href="/logout" class="btn btn-danger" role="button">Log out</a>
+
+
+</div>
+<div class="container-fluid">
+    <h2>Body Mass Index</h2>
+    <p>How does your BMI stack up?</p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>BMI</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="warning">
+            <td> Under Weight </td>
+            <td> 18.6 </td>
+        </tr>
+        <tr class="success">
+            <td> Healthy Weight </td>
+            <td> 18.6 - 24.9 </td>
+        </tr>
+        <tr class="warning">
+            <td> Over Weight </td>
+            <td> 25 - 29.9 </td>
+        </tr>
+        <tr class="danger">
+            <td> Obese </td>
+            <td> > 30 </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

@@ -97,8 +97,7 @@ router.post('/saveInfo', isLoggedIn, function(req, res, next) {
 
 });
 
-
-/*get profile page */
+//get profile page
 router.get('/profile', isLoggedIn, function(req, res, next) {
 
     res.render('profile', {

@@ -18,7 +18,9 @@ var userSchema = new mongoose.Schema({
         height : Number,
         weight : Number,
         date : Date,
-        BMI : Number
+        BMI : Number,
+        age : Number,
+        zip : String
     },
 
     creator : {

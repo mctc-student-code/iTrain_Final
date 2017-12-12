@@ -6,6 +6,8 @@
 
 <link rel='stylesheet' href='/stylesheets/style.css' />
 
+
+<!-- Jumbotron header with user's name a date of signup -->
 <div class="container-fluid">
     <div class="jumbotron text-center">
         {{#if username}}
@@ -27,7 +29,7 @@
     <h2>Quick Tips for a Healthy Lifestyle!</h2>
     <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
 
-        <!-- Wrapper for slides -->
+        <!-- Wrapper for slides including some healthy tips -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
                 <h4>Switch to low-salt foods, and use salt sparingly<br><span style="font-style:normal;"></span></h4>
@@ -56,7 +58,7 @@
 
 </div>
 
-
+<!-- display useful user information. Zipcode and age can just be stored in the database for census information -->
 <div class="container-fluid text-center">
 
     <p>Height:
@@ -83,16 +85,17 @@
         {{/if}}
     </p>
 
+<!-- client side form with client side form validation -->
     <form action="/saveInfo" method="POST">
         Date: <input type="date" name="date"><br>
-        Height (inches): <input type="number" name="height"><br>
-        Current Weight (lbs): <input type="number" name="weight"> <br>
-        <input type="submit" class="btn btn-success" name="updateInfo" value="Submit">
+        Height (inches): <input type="number" min="30" max="120" name="height"><br>
+        Current Weight (lbs): <input type="number" min="45" max="700" name="weight"> <br>
+        Age: <input type="number" min="1" max="100" name="age"><br>
+        5 digit Zip Code: <input type="text" pattern="[0-9]{5}"  name="zip"><br>
+        <input type="submit" class="btn btn-success" name="updateInfo" value="Submit"><br>
+        Please verify that all information is correct before continuing. <input type="checkbox" name="checkbox" required><br>
+        <a href="/logout" class="btn btn-danger" role="button">Log out</a>
     </form>
-
-
-    <a href="/logout" class="btn btn-danger" role="button">Log out</a>
-
 
 </div>
 <div class="container-fluid">

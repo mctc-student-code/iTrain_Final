@@ -21,21 +21,22 @@ router.get('/logout', function(req, res, next){
     res.redirect('/');
 });
 
-//post to login
+//post to login, route to user's profile if successful, otherwise flash failure message and route back to login
 router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/profile',
-    failureRedirect: '/',
+    failureRedirect: '/login',
     failureFlash: true
 }));
 
-//post to signup
+//post to signup, route to user's new profile on success, flash failure if they do not meet profile requirements e.g. forgetting to enter password
+//or user name is already taken.
 router.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/profile',
     failureRedirect: '/signup',
     failureFlash: true
 }));
 
-// GET logout page
+// GET logout page, routes back to login in page
 router.get('/logout', function(req, res, next){
     req.logout();  // passport provides this
     res.redirect('/');
@@ -46,7 +47,7 @@ specify it for every router */
 
 router.use(isLoggedIn);
 
-/* Middleware, to verify if the user is authenticated */
+/* Middleware, to verify if the user is authenticated  redirects to login on failure*/
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {
         next();
@@ -55,14 +56,18 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-// POST to update profile info
+// POST to update profile info, verifies user is logged in
 
-router.post('/saveInfo', isLoggedIn, function(req, res, next) {
-    if (req.body.date || req.body.weight || req.body.BMI || req.body.height) { //if either have been updated, then add them to req.user.userData object
+router.post('/saveInfo', isLoggedIn, function(req, res, next){
+    //if either have been updated, then add them to req.user.userData object
+    if (req.body.date || req.body.weight || req.body.BMI || req.body.height || req.body.age || req.body.zip) {
         req.user.profileInfo.date = req.body.date || req.user.profileInfo.date;
         req.user.profileInfo.height = req.body.height || req.user.profileInfo.height;
         req.user.profileInfo.weight = req.body.weight || req.user.profileInfo.weight;
+        req.user.profileInfo.age = req.body.age || req.user.profileInfo.age;
+        req.user.profileInfo.zip = req.body.zip || req.user.profileInfo.zip;
 
+//Calculate user's body mass index using user's height and weight
         var height = req.user.profileInfo.height * req.user.profileInfo.height;
         var weight = req.user.profileInfo.weight;
         var x = Math.round(weight / height * 703);
@@ -71,7 +76,7 @@ router.post('/saveInfo', isLoggedIn, function(req, res, next) {
 
         res.render('profile', {
             height : height,
-            weight : weight,
+            weight : weight
 
         });
 

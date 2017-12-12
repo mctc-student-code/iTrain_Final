@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 var hbs = require('hbs');
 var helpers = require('./hbshelpers/helpers');
 var MongoDBStore = require('connect-mongodb-session')(session);
-
+//use mongodb environment variable
 var mongo_url = process.env.mongo_url1;
 mongoose.Promise = global.Promise;
 mongoose.connect(mongo_url, { useMongoClient: true})

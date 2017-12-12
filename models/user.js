@@ -1,21 +1,32 @@
-
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
-var userSchema = mongoose.Schema({
+
+var userSchema = new mongoose.Schema({
 
     local : {
         username : String,
         password : String
     },
 
-    signUpDate : { type: Date,
-        default : Date.now() }
+    signUpDate : {
+        type: Date,
+        default : Date.now()
+    },
 
+    profileInfo : {
+        height : Number,
+        weight : Number,
+        date : Date,
+        BMI : Number
+    },
 
+    creator : {
+        type : ObjectId,
+        ref : 'User'
+    }
 
-    //favoriteColor : String,
-    //luckyNumber : Number
 });
 
 userSchema.methods.generateHash = function(password) {
@@ -27,7 +38,8 @@ userSchema.methods.validPassword = function(password) {
     //Hash entered password, compare with stored hash
     return bcrypt.compareSync(password, this.local.password);
 };
-
-module.exports = mongoose.model('User', userSchema);
-
+//Compile user schema into mongoose model object
+var User = mongoose.model('User', userSchema);
+//add export so other code can use it
+module.exports = User;
 

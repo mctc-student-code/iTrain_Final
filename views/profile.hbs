@@ -1,29 +1,54 @@
-<h2>Your Profile</h2>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 {{#if username}}
-    <p>Hello, {{username}}.</p>
+    <h2>Welcome to {{username}}'s profile</h2>
 {{/if}}
 
-<p>Member since {{signupDate}}</p>
+<p>Member since {{formatDate signUpDate}}.</p>
+
+<div class="data">
+<p>Height:
+    {{#if profileInfo.height}}
+        {{profileInfo.height}} inches
+    {{else}}
+        No height entered.
+    {{/if}}
+</p>
 
 <p>Last weigh in:
-    {{#if userData.weight}}
-        {{userData.weight}}
+    {{#if profileInfo.weight}}
+        {{profileInfo.weight}} lbs on {{formatDate profileInfo.date}}
     {{else}}
         No weight entered.
     {{/if}}
 </p>
 
-<ul>
-    {{#each messages}}
-        <li>{{this}}</li>
-    {{/each}}
-</ul>
+<p>Current estimated BMI: %
+    {{#if profileInfo.BMI}}
+        {{profileInfo.BMI}}
+    {{else}}
+        No BMI data.
+    {{/if}}
+</p>
 
-<form action="weight" method="POST">
-    Current Weight: <input type="number" name="weight"> <br>
-    <input type="submit" name="updateWeight" value="Weight">
+</div>
+
+<div class="profileList">
+
+    {{#if profileInfo}}
+        <p>{{@index}}You weighed {{this.weight}} and had a BMI % of{{this.BMI}} On {{formatDate this.date}}</p><br>
+    {{else}}
+        <p>No data entered yet</p>
+    {{/if}}
+</div>
+
+
+<form action="/saveInfo" method="POST">
+    Date: <input type="date" name="date"><br>
+    Height (inches): <input type="number" name="height"><br>
+    Current Weight (lbs): <input type="number" name="weight"> <br>
+    <input type="submit" name="updateInfo" value="Submit">
 </form>
 
-<a href="/logout">Log out</a>
 
+<a href="/logout">Log out</a>

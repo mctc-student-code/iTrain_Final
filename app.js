@@ -9,29 +9,49 @@ var passport = require('passport');
 var passportConfig = require('./config/passport')(passport);
 var flash = require('express-flash');
 var mongoose = require('mongoose');
+var hbs = require('hbs');
+var helpers = require('./hbshelpers/helpers');
+var MongoDBStore = require('connect-mongodb-session')(session);
 
+
+
+var mongo_url = process.env.mongo_url1;
+mongoose.Promise = global.Promise;
+mongoose.connect(mongo_url, { useMongoClient: true})
+    .then( () => { console.log("Connected to MongoDB"); })
+    .catch( (err) => { console.log("Error connecting", err); });
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
-var mongo_url = "mongodb://dbuser.lab9@127.0.0.1:27017/iTrain";
-
-mongoose.Promise = global.Promise;
-mongoose.connect(mongo_url, { useMongoClient: true})
-    .then( () => { console.log("Connected to MongoDB"); })
-.catch( (err) => { console.log("Error connecting", err); });
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerHelper(helpers);
 
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+//stores sessions/cookies in DB
+var store = new MongoDBStore( {url : mongo_url, collection: 'users'}, function(err) {
+    if (err) {
+        console.log('Error, can\'t connect to MongoDB to store session', err);
+    }
+});
+
+/*stores cookies with unique ids and in conjunction with passport
+stores the user connected to that cookie*/
 app.use(session({
     secret: 'replace with long random string',
     resave: true,
-    saveUninitialized: true
-   // store: store
+    saveUninitialized: true,
+    store: store
 }));
 
 require('./config/passport')(passport);
@@ -44,20 +64,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-/*var store = new MongoDBStore( {url : mongo_url, collection: 'sessions'}, function(err) {
-    if (err) {
-        console.log('Error, can\'t connect to MongoDB to store session', err);
-    }
-});
-*/
 
 app.use('/', index);
 app.use('/users', users);

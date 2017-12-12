@@ -1,8 +1,19 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding-left: 300px;
+    padding-right: 200px;
+    padding-top: 75px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: slategrey;
+
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+#data{
+    padding: auto;
+    color: #00B7FF;
+}
+div {
+
 }

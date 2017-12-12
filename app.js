@@ -13,9 +13,9 @@ var hbs = require('hbs');
 var helpers = require('./hbshelpers/helpers');
 var MongoDBStore = require('connect-mongodb-session')(session);
 //use mongodb environment variable
-var mongo_url = process.env.MONGO_URL;
+var db_url = process.env.MONGO_URL;
 mongoose.Promise = global.Promise;
-mongoose.connect(mongo_url, { useMongoClient: true})
+mongoose.connect(db_url, { useMongoClient: true})
     .then( () => { console.log("Connected to MongoDB"); })
     .catch( (err) => { console.log("Error connecting", err); });
 
@@ -24,6 +24,8 @@ var users = require('./routes/users');
 
 var app = express();
 
+
+// mongodb://armstrong:itrain@ds137826.mlab.com:37826/itrain
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -37,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //stores sessions/cookies in DB
-var store = new MongoDBStore( {url : mongo_url, collection: 'users'}, function(err) {
+var store = new MongoDBStore( {url : db_url, collection: 'sessions'}, function(err) {
     if (err) {
         console.log('Error, can\'t connect to MongoDB to store session', err);
     }

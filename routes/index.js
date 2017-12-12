@@ -24,7 +24,7 @@ router.get('/logout', function(req, res, next){
 //post to login, route to user's profile if successful, otherwise flash failure message and route back to login
 router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/profile',
-    failureRedirect: '/login',
+    failureRedirect: '/',
     failureFlash: true
 }));
 

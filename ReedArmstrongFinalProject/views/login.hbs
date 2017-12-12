@@ -1,0 +1,33 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link rel='stylesheet' href='/stylesheets/style.css' />
+
+<div class="container-fluid">
+    <div class="jumbotron text-center">
+
+        <h2>Welcome!</h2>
+
+        <h3>Please login into your BMI Census account</h3>
+
+
+    </div>
+</div>
+
+<ul>
+    {{#each messages}}
+        <li>{{this}}</li>
+    {{/each}}
+</ul>
+<div class="container-fluid text-center">
+    <form method="POST" action="/login">
+        Username: <input name="username"/>
+        Password: <input type="password" name="password"/>
+
+        <input type="submit" class="btn btn-success" value="Log In">
+    </form>
+
+<p>New here? You can <a href="/signup">sign up here!</a></p>
+
+</div>

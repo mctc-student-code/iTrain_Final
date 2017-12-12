@@ -1,0 +1,52 @@
+.jumbotron {
+    background-color: dodgerblue;
+    padding: 150px 25px;
+    color: #ffffff;
+    font-size: 56px;
+}
+
+.container-fluid {
+    padding: 20px 20px;
+    background-color: gainsboro;
+}
+.container {
+    background-color: #f4511e;
+}
+.carousel-control.right, .carousel-control.left {
+    background-image: none;
+    color: dodgerblue;
+}
+
+.carousel-indicators li {
+    border-color: dodgerblue;
+}
+
+.carousel-indicators li.active {
+    background-color: dodgerblue;
+}
+
+.item h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 40px 0;
+}
+
+.item span {
+    font-style: normal;
+}
+
+.list-inline {
+    margin-bottom: 5px;
+    background-color: dodgerblue;
+    border: 0px;
+    font-size: 16px;
+    line-height: 2;
+    letter-spacing: 4px;
+
+}
+
+.list-inline a:hover {
+    color: #fff
+}

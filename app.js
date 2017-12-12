@@ -13,7 +13,8 @@ var hbs = require('hbs');
 var helpers = require('./hbshelpers/helpers');
 var MongoDBStore = require('connect-mongodb-session')(session);
 //use mongodb environment variable
-var db_url = process.env.MONGO_URL;
+var db_url=process.env.MONGO_URL;
+
 mongoose.Promise = global.Promise;
 mongoose.connect(db_url, { useMongoClient: true})
     .then( () => { console.log("Connected to MongoDB"); })

@@ -7,7 +7,7 @@ var User = require('../models/user');
 
 // GET home page aka login page
 router.get('/', function(req, res, next) {
-    res.render('login');
+   res.render('login');
 });
 
 // Get signup page
@@ -45,7 +45,7 @@ router.get('/logout', function(req, res, next){
 /* Apply this middleware to every route in the file, so don't need to
 specify it for every router */
 
-router.use(isLoggedIn);
+//router.use(isLoggedIn);
 
 /* Middleware, to verify if the user is authenticated  redirects to login on failure*/
 function isLoggedIn(req, res, next) {
